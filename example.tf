@@ -30,17 +30,20 @@ module "vpc-utm" {
 }
 
 module "utm" {
-  source     = "git@github.com:cloudreach/squid-utm.git//terraform?ref=v1.1"
+  source     = "./squid-utm"
   vpc_id     = module.vpc-utm.vpc_id
   aws_region = var.region
 
-  environment = "dev"
+  environment = "utm-squid-${var.region}"
 
   lb_subnets      = module.vpc-utm.public_subnets
   fargate_subnets = module.vpc-utm.public_subnets
+  internal = true
 
   desired_count = 2
 
+  whitelist_aws_region = "${var.region}"
+  whitelist_url = ".docker.io"
   url_block_all = false
 
   extra_tags = {
