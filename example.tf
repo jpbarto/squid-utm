@@ -3,7 +3,7 @@ terraform {
 }
 
 variable "region" {
-  default = "eu-central-1"
+  default = "us-west-1"
 }
 
 provider "aws" {
@@ -30,7 +30,7 @@ module "vpc-utm" {
 }
 
 module "utm" {
-  source     = "./squid-utm"
+  source     = "./terraform"
   vpc_id     = module.vpc-utm.vpc_id
   aws_region = var.region
 
